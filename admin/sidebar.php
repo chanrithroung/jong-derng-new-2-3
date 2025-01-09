@@ -39,7 +39,7 @@
                         </div>
                         <div class="wrap-center">
                             <?php
-                                $userData = getCurrentUser($_SESSION['user_id']);
+                                $userData = getCurrentData($_SESSION['user_id'], 'users');
                                 echo '
                                     <img src="assets/images/'.$userData['profile'].'" style="width:50px; height:50px; object-fit: cover">
                                     <h6 class="m-0">Welcome '.$userData['username'].'</h6>

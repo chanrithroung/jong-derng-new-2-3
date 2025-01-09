@@ -10,10 +10,12 @@
                             <figure>
                                 <form method="post" enctype="multipart/form-data">
                                     <div class="form-group">
-                                        <p class="message">
+                                        <p class="message"> 
                                             <?php
-                                                echo addLogo();
-                                            ?>
+                                                if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                                                    AddLogo(REQEUST:$_POST, SOURCE_FILE: $_FILES['thumbnail'], author_id: $_SESSION['user_id'] ); 
+                                                }
+                                            ?> 
                                         </p>
                                     </div>
                                     <div class="form-group">

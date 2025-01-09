@@ -1,12 +1,19 @@
 <?php 
     include('sidebar.php');
-    $postID = $_GET['id'];
-    $currentPost = getCurrentPost($postID, 'website_logo');
 
-    $isCheck = '';
-    if($currentPost['pined'] == 1) {
-        $isCheck = 'checked';
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        updateLogo($_POST, $_FILES['thumbnail']);
     }
+    $logo = getCurrentData($_GET['id'], 'website_logo');
+    $isCheck = "";
+    if ($logo['pined'] == '1')  $isCheck = 'checked';
+
+
+
+
+
+    
 ?>
                 <div class="col-10">
                     <div class="content-right">
@@ -16,16 +23,16 @@
                         <div class="bottom">
                             <figure>
                                 <form method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="postID" value="<?php echo $postID ?>">
-                                    <input type="hidden" name="oldThumbnail" value="<?php echo $currentPost['thumbnail'] ?>">
+                                    <input type="hidden" name="logoId" value=" <?php echo $logo['id'] ?>">
+                                    <input type="hidden" name="oldThumbnail" value="<?php echo $logo['thumbnail'] ?>">
                                     <div class="form-group">
                                         <label>Pined</label>
-                                        <input type="checkbox" name="pined" value="1" <?php  echo $isCheck; ?> class="form-check-input">
+                                        <input type="checkbox" name="pined" <?php echo $isCheck ?> value="1" class="form-check-input">
                                     </div>
 
                                     <div class="form-group">
                                         <label>Thumbnail</label> <br>
-                                        <img src="assets/image/<?php  echo $currentPost['thumbnail']; ?>" class="img-update">
+                                        <img src="http://localhost/jongdeng-news/admin/assets/images/<?php  echo $logo['thumbnail'] ?>" class="img-update">
                                         <input type="file" name="thumbnail" class="form-control">
                                     </div>
                                     <div class="form-group">

@@ -14,11 +14,37 @@
                                             <th>ID</th>
                                             <th>Thumbnail</th>
                                             <th>Pined</th>
-                                            <th>Author</th>
                                             <th>Publish Date</th>
                                             <th>Actions</th>
                                         </tr>
-                                        <?php listLogo(); ?>
+                                        <?php 
+                                            $logos = ListLogo($_SESSION['user_id']);
+
+                                            foreach( $logos as $logo ) {
+                                                $status = "";
+
+                                                if ($logo['pined']==1) {
+                                                    $status = 'is pined';
+                                                } else {
+                                                    $status = 'is not pined';
+                                                }
+                                                echo '<tr>
+                                                        <td>'.$logo['id'].'</td>
+                                                        <td>
+                                                            <img style="height: 100px; object-fit: contain" src="http://localhost/jongdeng-news/admin/assets/images/'.$logo['thumbnail'].'" >
+                                                        </td>
+                                                        <td>'. $status .'</td>
+                                                        <td>'. $logo['created_at'] .'</td>
+                                                        <td width="150px">
+                                                            <a href="update-logo.php?id='.$logo['id'].'" class="btn btn-primary">Update</a>
+                                                            <button type="button" remove-id="1" class="btn btn-danger btn-remove" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                                Remove
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                ';
+                                            }
+                                        ?>
                                     </table>
 
                                     <!-- Modal -->

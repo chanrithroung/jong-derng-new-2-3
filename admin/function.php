@@ -40,11 +40,11 @@
     }
 
 
-    // Get Current User
-    function getCurrentUser($user_id) {
-        $getUser_query = "SELECT * FROM `users` WHERE `id` = $user_id";
-        $user = db_connect()->query(query:$getUser_query )->fetchAll(PDO::FETCH_ASSOC)[0];
-        return $user;
+    // Get current Data
+    function getCurrentData($id, $table) {
+        $getData_query = "SELECT * FROM `$table` WHERE `id` = $id";
+        $data = db_connect()->query(query:$getData_query )->fetchAll(PDO::FETCH_ASSOC)[0];
+        return $data;
     }   
 
 
@@ -52,3 +52,35 @@
     function UserAccepLogout() {
         session_destroy();
     }
+
+    // Add Logo 
+    function AddLogo($REQEUST, $SOURCE_FILE, $author_id) {
+        $thumbnail = fileUploader($SOURCE_FILE);
+        $pined = !$REQEUST['pined']? '0':'1';
+        $now = now();
+        $add_logo_query = "INSERT INTO `website_logo` (`thumbnail`, `pined`, `author_id`, `is_deleted`, `created_at`, `updated_at`)
+                            VALUES ('$thumbnail', '$pined', '$author_id', '0', '$now', '$now' )";
+        db_connect()->exec($add_logo_query);
+        echo 'Logo created successfully';
+    }
+
+
+    // List Logo
+    function ListLogo( $author_id ) {
+        return db_connect()->query( query: "SELECT * FROM `website_logo` WHERE `author_id` = '$author_id';" )->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    function updateLogo($REQEUST, $SOURCE_FILE) {
+        $logoId = $REQEUST['logoId'];
+        $pined = $REQEUST['pined'] ? '1' : '0';
+        $now = now();
+        if($SOURCE_FILE['name']) {
+            $thumbnail = fileUploader($SOURCE_FILE);
+        } else {
+            $thumbnail = $REQEUST['oldThumbnail'];
+        }
+        db_connect()->exec("UPDATE `website_logo` SET `thumbnail` = '$thumbnail', `pined` = '$pined', `updated_at` = '$now' WHERE `id` = $logoId;");
+        header("Location: list-logo.php");
+    }
+
