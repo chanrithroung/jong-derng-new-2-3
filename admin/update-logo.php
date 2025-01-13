@@ -4,15 +4,12 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         updateLogo($_POST, $_FILES['thumbnail']);
+        header("Location: list-logo.php");
     }
+    
     $logo = getCurrentData($_GET['id'], 'website_logo');
     $isCheck = "";
     if ($logo['pined'] == '1')  $isCheck = 'checked';
-
-
-
-
-
     
 ?>
                 <div class="col-10">

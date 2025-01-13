@@ -75,6 +75,21 @@
                                         </li>
                                     </ul>
                                 </li>
+
+
+                                <!-- New Category -->
+                                <li class="parent">
+                                    <a class="parent" href="javascript:void(0)">
+                                        <span>Category</span>
+                                        <img src="assets/icon/arrow-right.svg" style="width: 1.1rem">
+                                    </a>
+                                    <ul class="child">
+                                        <li>
+                                            <a href="list-category.php">List Category</a>
+                                            <a href="add-category.php">Add Category</a>
+                                        </li>
+                                    </ul>
+                                </li>
                                 
                                 <!-- logout -->
                                 <li class="parent">

@@ -71,16 +71,32 @@
     }
 
 
-    function updateLogo($REQEUST, $SOURCE_FILE) {
-        $logoId = $REQEUST['logoId'];
-        $pined = $REQEUST['pined'] ? '1' : '0';
+    function updateLogo($REQUEST, $SOURCE_FILE) {
+        $logoId = $REQUEST['logoId'];
+        $pined = $REQUEST['pined'] ? '1' : '0';
         $now = now();
         if($SOURCE_FILE['name']) {
             $thumbnail = fileUploader($SOURCE_FILE);
         } else {
-            $thumbnail = $REQEUST['oldThumbnail'];
+            $thumbnail = $REQUEST['oldThumbnail'];
         }
         db_connect()->exec("UPDATE `website_logo` SET `thumbnail` = '$thumbnail', `pined` = '$pined', `updated_at` = '$now' WHERE `id` = $logoId;");
-        header("Location: list-logo.php");
     }
 
+
+    // Create category 
+    function createCategory($REQUEST, $author_id) {
+        $category = $REQUEST['category'];
+        $now = now();
+        $insert_query = "INSERT INTO `category`(`name`, `author_id`, `is_deleted`, `created_at`, `updated_at`)
+        VALUES ('$category', '$author_id', '0', '$now', '$now'); ";
+        db_connect()->exec($insert_query); 
+        echo 'Category created successfully';
+    }
+
+
+    // List category 
+    function listCategory($author_id) {
+        $select_query = "SELECT * FROM `category`;";
+        return db_connect()->query( $select_query )->fetchAll(PDO::FETCH_ASSOC);
+    }
