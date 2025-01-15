@@ -1,3 +1,4 @@
+
 <?php
     include("utils.php");
     include("db_connect.php");
@@ -97,6 +98,53 @@
 
     // List category 
     function listCategory($author_id) {
-        $select_query = "SELECT * FROM `category`;";
+        $select_query = "SELECT * FROM `category` WHERE `author_id` = '$author_id' ORDER BY `id` DESC;";
         return db_connect()->query( $select_query )->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    // Add News
+    function addNews($REQEUST, $SOURCE_FILE, $author_id) {
+        $title = $REQEUST['title'];
+        $category_id = $REQEUST['category_id'];
+        $pined = $REQEUST['pined'] ? 1 : 0;
+        $thumbnail = fileUploader($SOURCE_FILE);
+        $description = $REQEUST['description'];
+        $now = now();
+
+        $insert_news = "INSERT INTO `news`(`title`, `pined`, `thumbnail`, `description`, `author_id`, `category_id`, `created_at`, `updated_at`)
+                        VALUES ('$title', '$pined', '$thumbnail', '$description', '$author_id', '$category_id', '$now', '$now');";
+    
+        db_connect()->exec( $insert_news );
+
+        echo 'news created successfully';
+
+    }
+
+
+    function listNews($author_id) {
+        $list_news_query = "SELECT * FROM `news` INNER JOIN `category` on news.category_id = category.id WHERE news.author_id = $author_id;";
+        $all_news = db_connect()->query( $list_news_query )->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach($all_news as $news) {
+            echo '                      
+                <tr>
+                    <td> <div style="width: 200px;  overflow: hidden;white-space: nowrap; text-overflow: ellipsis;" class="truncated-text">'.$news['title'].'</div></td>
+                    <td>'.$news['name'].'</td>
+                    <td><img src="assets/images/'.$news['thumbnail'].'"></td>
+                    <td>'.$news['created_at'].'</td>
+                    <td class="d-flex gap-2"  width="150px">
+                        <a href=""class="btn btn-primary">Update</a>
+                        <button type="button" remove-id="1" class="btn btn-danger btn-remove" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Remove
+                        </button>
+                    </td>
+                </tr>
+            ';
+        }
+    }
+
+
+
+
+
+

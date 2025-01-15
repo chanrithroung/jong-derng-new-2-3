@@ -1,5 +1,6 @@
 <?php 
     include('sidebar.php');
+    $categories  = listCategory( $_SESSION['user_id'] );
 ?>
                 <div class="col-10">
                     <div class="content-right">
@@ -7,40 +8,44 @@
                             <h3>Add Sport News</h3>
                         </div>
                         <div class="bottom">
+                            <p class="message">
+                                <?php 
+                                    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                                        addNews($_POST, $_FILES['thumbnail'], $_SESSION['user_id']);
+                                    }
+                                ?>
+                            </p>
                             <figure>
                                 <form method="post" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <label>Title</label>
-                                        <input type="text" class="form-control">
+                                        <input name="title" type="text" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label>Type</label>
-                                        <select class="form-select">
-                                            <option value="">Type 1</option>
-                                            <option value="">Type 2</option>
-                                            <option value="">Type 3</option>
+                                        <select name="category_id" class="form-select">
+                                            <?php
+                                                foreach($categories as $category) {
+                                                    echo '<option value="'.$category['id'].'">'.$category['name'].'</option>';
+                                                }
+                                            ?>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label>Checkbox</label>
-                                        <input type="checkbox" class="form-check-input">
+                                        <label>Pined</label>
+                                        <input name="pined" type="checkbox" class="form-check-input">
                                     </div>
-                                    <div class="form-group">
-                                        <label>Radio</label>
-                                        <input type="radio" class="form-check-input">
-                                    </div>
+                                
                                     <div class="form-group">
                                         <label>File</label>
-                                        <input type="file" class="form-control">
+                                        <input name="thumbnail" type="file" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label>Description</label>
-                                        <textarea class="form-control"></textarea>
+                                        <textarea name="description" class="form-control"></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                        <button type="submit" class="btn btn-success">Success</button>
-                                        <button type="submit" class="btn btn-danger">Danger</button>
+                                        <button type="submit" class="btn btn-primary">Save news</button>
                                     </div>
                                 </form>
                             </figure>

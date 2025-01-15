@@ -1,7 +1,6 @@
 <?php 
     include('sidebar.php');
 
-
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         updateLogo($_POST, $_FILES['thumbnail']);
         header("Location: list-logo.php");

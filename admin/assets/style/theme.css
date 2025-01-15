@@ -220,3 +220,11 @@ p.message {
     margin-bottom: 1rem;
     width: 200px;
 }
+
+.truncated-text {
+    width: 200px; /* Adjust width as needed */
+    overflow: hidden; /* Hides overflowing text */
+    white-space: nowrap; /* Prevents text from wrapping to the next line */
+    text-overflow: ellipsis;
+    background-color: red; /* Adds "..." at the end of the truncated text */
+  }
