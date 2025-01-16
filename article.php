@@ -1,3 +1,16 @@
+<?php
+
+    include("admin/function.php");
+
+    if (!isset($_GET['id'])) header("Location: home.php");
+
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+        $newId = $_GET['id'];
+        $news = getDetailNews($newId);
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -13,8 +26,8 @@
         <header>
             <div class="container">
                 <div class="logo">
-                    <a href="">
-                        <img src="https://placehold.co/200x80" alt="">
+                    <a href="home.php">
+                        <img src="http://localhost/jongdeng-news/admin/assets/images/<?php echo getWebSiteLogo() ?>" style="width: 200px;height: 80px;">
                     </a>
                 </div>
                 <ul>
@@ -45,39 +58,22 @@
                         <div class="col-8">
                             <figure>
                                 <div class="thumbnail">
-                                    <img src="https://placehold.co/800x600" alt="">
+                                    <img src="http://localhost/jongdeng-news/admin/assets/images/<?php echo  $news['thumbnail'] ?>">
                                 </div>
                             </figure>
                             <figcaption>
-                                <h3>Received 10% off at Fun Food Group</h3>
+                                <h3><?php echo $news['title'] ?></h3>
                                 <div class="date">
                                     <img src="assets/icons/date.svg" alt="">
-                                    <h6>20-Oct-2024</h6>
+                                    <h6><?php echo $news['created_at'] ?>  </h6>
                                 </div>
                                 <div class="date">
                                     <img src="assets/icons/eye.svg" alt="">
-                                    <h6>999</h6>
+                                    <h6><?php echo $news['viewer'] ?></h6>
                                 </div>
                                 <div class="line"></div>
                                 <div class="description">
-                                    Get special discount when showing your BRIDGE Bank card at the restaurant as below :
-                                    10% Discount for Fun Crab Seafood (2 outlets) Min 100$ expending
-                                    10% Discount for The Cut Steakhouse (1 outlet) Min 100$ expending
-                                    10% Discount for Hiko Teppayaki (4 outlets) Min 150$ expending
-                                    10% Discount for Mras Prov (1 outlets) for All kind of bill
-                                    10% Discount for Healthy Food Min 3 Orders
-                                    Get special discount when showing your BRIDGE Bank card at the restaurant as below :
-                                    10% Discount for Fun Crab Seafood (2 outlets) Min 100$ expending
-                                    10% Discount for The Cut Steakhouse (1 outlet) Min 100$ expending
-                                    10% Discount for Hiko Teppayaki (4 outlets) Min 150$ expending
-                                    10% Discount for Mras Prov (1 outlets) for All kind of bill
-                                    10% Discount for Healthy Food Min 3 Orders
-                                    Get special discount when showing your BRIDGE Bank card at the restaurant as below :
-                                    10% Discount for Fun Crab Seafood (2 outlets) Min 100$ expending
-                                    10% Discount for The Cut Steakhouse (1 outlet) Min 100$ expending
-                                    10% Discount for Hiko Teppayaki (4 outlets) Min 150$ expending
-                                    10% Discount for Mras Prov (1 outlets) for All kind of bill
-                                    10% Discount for Healthy Food Min 3 Orders
+                                    <?php echo $news['description'] ?>
                                 </div>
                             </figcaption>
                         </div>
@@ -95,7 +91,7 @@
                             <figure>
                                 <div class="thumbnail">
                                     <a href="">
-                                        <img src="https://placehold.co/300" alt="">
+                                        <img src="http://localhost/jongdeng-news/admin/assets/images/<?php $news['thumbnail'] ?>" style="width: 200px;height: 80px;">
                                     </a>
                                 </div>
                             </figure>

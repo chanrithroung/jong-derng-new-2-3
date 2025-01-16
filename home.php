@@ -1,3 +1,4 @@
+<?php include("admin/function.php") ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -13,8 +14,8 @@
         <header>
             <div class="container">
                 <div class="logo">
-                    <a href="">
-                        <img src="https://placehold.co/200x80" style="width: 200px;height: 80px;">
+                    <a href="home.php">
+                        <img src="http://localhost/jongdeng-news/admin/assets/images/<?php echo getWebSiteLogo() ?>" style="width: 200px;height: 80px;">
                     </a>
                 </div>
                 <ul>
@@ -44,14 +45,19 @@
                     <div class="row">
                         <div class="col-6">
                             <figcaption>
-                                <h2>OFFICIAL PROGRAMMES</h2>
-                                <p>Subscribe to receive our official England match programmes for every home game, or why not buy as a gift?</p>
-                                <a href="">FIND OUT MORE</a>
+                                <?php 
+                                    $pinedNews = getPinedNews();
+
+                                    echo '<h2>'.$pinedNews['title'].'</h2>';
+                                    echo '<p>'.$pinedNews['description'].'</p>';
+                                ?>
+                                
+                                <a href="article.php?id=<?php echo $pinedNews['id'] ?>">FIND OUT MORE</a>
                             </figcaption>
                         </div>
                         <div class="col-6">
                             <div class="thumbnail">
-                                <img src="https://placehold.co/650x350" alt="">
+                                <img src="http://localhost/jongdeng-news/admin/assets/images/<?php echo $pinedNews['thumbnail']  ?>" alt="">
                             </div>
                         </div>
                     </div>

@@ -146,5 +146,31 @@
 
 
 
+    // ------- Front-end
+    // Get website logo
+    function getWebSiteLogo() {
+        return db_connect()->query("SELECT `thumbnail` FROM `website_logo` WHERE `pined` = '1' ORDER BY `id` DESC LIMIT 1;")->fetchAll(PDO::FETCH_ASSOC)[0]['thumbnail'];
+    }
+
+
+    // Get pined news
+    function getPinedNews() {
+        return db_connect()->query(" SELECT * FROM `news` WHERE pined = '1' ORDER BY `id` DESC LIMIT 1")->fetchAll(PDO::FETCH_ASSOC)[0];
+    }
+
+
+
+    // get Detailt new 
+    function getDetailNews($newId) {
+        $news = db_connect()->query("SELECT * FROM `news` WHERE `id` = '$newId'; ")->fetchAll(PDO::FETCH_ASSOC)[0];
+        
+        // update viewer
+        $currentViewer = $news['viewer'] + 1;
+        db_connect()->exec( "UPDATE `news` SET `viewer` = '$currentViewer' WHERE `id` = '$newId'; ");
+        return $news;
+    }
+
+
+
 
 
