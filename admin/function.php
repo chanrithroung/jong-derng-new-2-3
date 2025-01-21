@@ -171,6 +171,49 @@
     }
 
 
+    
+
+
+    function getPageGenation($table, $limitPerpage) {
+        $count_number = db_connect()->query("SELECT COUNT(`id`) as data_number FROM `$table`")->fetchAll(PDO::FETCH_ASSOC)[0];
+        $pages = ceil($count_number['data_number'] / $limitPerpage);
+        for($i = 0; $i < $pages; $i++) echo '<li class=""><a href="">'.($i + 1).'</a></li>';
+    }
+
+    // get All news
+    function getAllNews() {
+        $newPerPage = 6;
+        $allNews = db_connect()->query(" SELECT * FROM `news` ORDER BY `id` DESC  ;")->fetchAll(PDO::FETCH_ASSOC);
+        
+        foreach($allNews as $news) {
+            echo '
+                <div class="col-4">
+                    <figure>
+                        <div class="thumbnail">
+                            <a href="">
+                                <img src="http://localhost/jongdeng-news/admin/assets/images/'.$news['thumbnail'].'" alt="">
+                            </a>
+                        </div>
+                    </figure>
+                    <figcaption>
+                        <h3>
+                            <a href="">
+                                '.$news['title'].'
+                            </a>
+                        </h3>
+                        <div>
+                            <img src="assets/icons/date.svg" alt="">
+                            <span>'.$news['created_at'].'</span>
+                        </div>
+                    </figcaption>
+                </div>
+            ';
+        }
+
+
+    }
+
+
 
 
 

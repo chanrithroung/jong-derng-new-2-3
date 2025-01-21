@@ -1,3 +1,4 @@
+<?php include("admin/function.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -13,8 +14,8 @@
         <header>
             <div class="container">
                 <div class="logo">
-                    <a href="">
-                        <img src="https://placehold.co/200x80" alt="">
+                    <a href="home.php">
+                        <img src="http://localhost/jongdeng-news/admin/assets/images/<?php echo getWebSiteLogo() ?>" style="width: 200px;height: 80px;">
                     </a>
                 </div>
                 <ul>
@@ -53,41 +54,15 @@
                         </form>
                     </div>
                     <div class="row">
-                        <div class="col-4">
-                            <figure>
-                                <div class="thumbnail">
-                                    <a href="">
-                                        <img src="https://placehold.co/300" alt="">
-                                    </a>
-                                </div>
-                            </figure>
-                            <figcaption>
-                                <h3>
-                                    <a href="">
-                                        1990 World Cup Finals 3rd Shirt
-                                    </a>
-                                </h3>
-                                <div>
-                                    <img src="assets/icons/date.svg" alt="">
-                                    <span>19 Jun, 2023</span>
-                                </div>
-                            </figcaption>
-                        </div>
+                        <?php getAllNews(); ?>
                     </div>
 
                     <div class="row">
                         <div class="col-12">
                             <ul class="pagination">
-                                <li class="active">
-                                    <a href="">1</a>
-                                </li>
-                                <li>
-                                    <a href="">2</a>
-                                </li>
-                                <li>
-                                    <a href="">3</a>
-                                </li>
+                                <?php getPageGenation('news', 1); ?>
                             </ul>
+                            
                         </div>
                     </div>
 
