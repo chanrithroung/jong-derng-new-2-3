@@ -1,4 +1,7 @@
-<?php include("admin/function.php"); ?>
+<?php include("admin/function.php"); 
+    if(!isset($_GET['page'])) $page = 1;
+    else $page = $_GET['page'];
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -44,23 +47,32 @@
                 <div class="container">
                     <div class="top">
                         <h2>News</h2>
-                        <form action="" method="post">
-                            <select name="filter" class="form-control">
-                                <option selected disabled>Filter News</option>
-                                <option value="">Sports</option>
-                                <option value="">Technology</option>
-                                <option value="">Entertainment</option>
+                        <form action="" method="get">
+                            <select name="category" class="form-control">
+                                <?php getAllCategoryName() ?>
                             </select>
+                            <button>Filter</button>
                         </form>
                     </div>
                     <div class="row">
-                        <?php getAllNews(); ?>
+                        
+                        <?php
+                            if (!isset($_GET['category']))
+                                getAllNews($page, 3);
+                            else {
+                                $category = $_GET['category'];
+                                filterNews($category);
+                            }
+                                
+
+
+                        ?>
                     </div>
 
                     <div class="row">
                         <div class="col-12">
                             <ul class="pagination">
-                                <?php getPageGenation('news', 1); ?>
+                                <?php getPageGenation('news', 3); ?>
                             </ul>
                             
                         </div>

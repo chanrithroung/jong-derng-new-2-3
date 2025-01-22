@@ -19,8 +19,6 @@
         db_connect()->exec(statement:$insert_query);
     }
 
-
-
     // Vertify user login 
     function UserLogin($_REQEUST) {
         $username_email  = $_REQEUST['username_email'];
@@ -144,8 +142,6 @@
     }
 
 
-
-
     // ------- Front-end
     // Get website logo
     function getWebSiteLogo() {
@@ -177,13 +173,15 @@
     function getPageGenation($table, $limitPerpage) {
         $count_number = db_connect()->query("SELECT COUNT(`id`) as data_number FROM `$table`")->fetchAll(PDO::FETCH_ASSOC)[0];
         $pages = ceil($count_number['data_number'] / $limitPerpage);
-        for($i = 0; $i < $pages; $i++) echo '<li class=""><a href="">'.($i + 1).'</a></li>';
+        for($i = 1; $i <= $pages; $i++) echo '<li class=""><a href="?page='.$i.'">'.($i).'</a></li>';
     }
 
     // get All news
-    function getAllNews() {
-        $newPerPage = 6;
-        $allNews = db_connect()->query(" SELECT * FROM `news` ORDER BY `id` DESC  ;")->fetchAll(PDO::FETCH_ASSOC);
+    function getAllNews($currentPage, $limitPerpage) {
+    
+        $offSet = ($currentPage - 1) * $limitPerpage;
+
+        $allNews = db_connect()->query(" SELECT * FROM `news` ORDER BY `id` DESC  LIMIT $limitPerpage OFFSET $offSet;")->fetchAll(PDO::FETCH_ASSOC);
         
         foreach($allNews as $news) {
             echo '
@@ -210,9 +208,53 @@
             ';
         }
 
+    }
+        // filterNew
+
+        function filterNews($category) {
+            // $offSet = ($currentPage - 1) * $limitPerpage;
+
+            $category_id = db_connect()->query(" SELECT `id` FROM `category` WHERE `name` = '$category'; ")->fetchAll(PDO::FETCH_ASSOC)[0]['id'];
+
+            $allNews = db_connect()->query(" SELECT * FROM `news` WHERE `category_id` = '$category_id' ORDER BY `id` DESC  ;")->fetchAll(PDO::FETCH_ASSOC);
+            
+            foreach($allNews as $news) {
+                echo '
+                    <div class="col-4">
+                        <figure>
+                            <div class="thumbnail">
+                                <a href="">
+                                    <img src="http://localhost/jongdeng-news/admin/assets/images/'.$news['thumbnail'].'" alt="">
+                                </a>
+                            </div>
+                        </figure>
+                        <figcaption>
+                            <h3>
+                                <a href="">
+                                    '.$news['title'].'
+                                </a>
+                            </h3>
+                            <div>
+                                <img src="assets/icons/date.svg" alt="">
+                                <span>'.$news['created_at'].'</span>
+                            </div>
+                        </figcaption>
+                    </div>
+                ';
+        }
+
 
     }
 
+
+    function getAllCategoryName() {
+        $categories = db_connect()->query(" SELECT `name` FROM `category` WHERE `is_deleted` <> '1'; ")->fetchAll(PDO::FETCH_ASSOC);
+        foreach($categories as $cat) echo '<option value="'.$cat['name'].'">'.$cat['name'].'</option>';
+    }
+
+
+
+    ?>
 
 
 
